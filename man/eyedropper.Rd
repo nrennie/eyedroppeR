@@ -9,7 +9,8 @@ eyedropper(
   img_path = NULL,
   inc_palette = TRUE,
   n_swatches = 24,
-  coord_sys = 1
+  coord_sys = 1,
+  print_palette = TRUE
 )
 }
 \arguments{
@@ -24,6 +25,8 @@ first and then you can select the desired colours.}
 \item{n_swatches}{Number of swatches to extract from the image prior to selecting colours.s}
 
 \item{coord_sys}{Method for extracting the colour from the graphics window Takes values 1, or 2.  See details for more.}
+
+\item{print_output}{logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.}
 }
 \value{
 A character vector of hex codes

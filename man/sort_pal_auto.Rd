@@ -4,7 +4,7 @@
 \alias{sort_pal_auto}
 \title{Auto palette sort}
 \usage{
-sort_pal_auto(.pal, label, plot_output = FALSE)
+sort_pal_auto(.pal, label, plot_output = FALSE, print_output = TRUE)
 }
 \arguments{
 \item{.pal}{Input palette}
@@ -12,6 +12,8 @@ sort_pal_auto(.pal, label, plot_output = FALSE)
 \item{label}{Label for the palette.}
 
 \item{plot_output}{Logical. Default \code{FALSE}.}
+
+\item{print_output}{logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.}
 }
 \value{
 Returns a character vector of hex codes

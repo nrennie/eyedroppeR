@@ -4,12 +4,14 @@
 \alias{sort_pal}
 \title{Manually sort a palette}
 \usage{
-sort_pal(pal, n = NULL)
+sort_pal(pal, n = NULL, print_output = TRUE)
 }
 \arguments{
 \item{pal}{Palette. Character vector of hex codes}
 
 \item{n}{Number of colours to choose}
+
+\item{print_output}{logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.}
 }
 \value{
 Character vector
