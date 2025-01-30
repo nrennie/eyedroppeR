@@ -219,10 +219,10 @@ extract_pal <- function(n, img_path, sort = "auto", plot_output = TRUE, save_out
   if(plot_output) print(swatch(pal, temp, radius = swatch_radius))
 
   # return
-  list(
+  return(list(
     pal = pal,
     img_path = temp
-  )
+  ))
 
 }
 
