@@ -29,6 +29,7 @@ utils::globalVariables(c("x", "y", "id", "bg", "name"))
 #' it will return the wrong colours, or it won't work at all. I'm unaware of a way to check the coordinate system
 #' before clicking on the image, so for now I have a toggle.
 #'
+#' @param print_output logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.
 #' @return A character vector of hex codes
 #' @export
 #'
@@ -63,7 +64,8 @@ eyedropper <- function(
     img_path = NULL,
     inc_palette = TRUE,
     n_swatches = 24,
-    coord_sys = 1
+    coord_sys = 1,
+    print_palette = TRUE
     ) {
 
   # name palette
@@ -134,7 +136,9 @@ eyedropper <- function(
   })
 
   # print pal to copy + paste
-  pastey(pal, label)
+  if (print_output) {
+    pastey(pal, label)
+  }
 
   # make plot output
   # plt <- make_output(NULL, pal, img_path, label)
@@ -142,10 +146,10 @@ eyedropper <- function(
   print(plt)
 
   # return
-  list(
+  return(list(
     pal = pal,
     img_path = img_path
-  )
+  ))
 
 }
 
@@ -161,6 +165,7 @@ eyedropper <- function(
 #' @param sort Sort method. Either 'manual' or 'auto'
 #' @param plot_output logical. Default \code{TRUE}. Plots the output of the extracted palette.
 #' @param save_output logical. Default \code{FALSE}. Save the output of the extracted palette.
+#' @param print_output logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.
 #' @param swatch_radius Radius of the image for the swatch. Default 50 to make it a circle. Use 5 for rounded edges.
 #'
 #' @return Returns a character vector of hex codes
@@ -172,7 +177,7 @@ eyedropper <- function(
 #' \dontrun{
 #' extract_pal(8, path)
 #' }
-extract_pal <- function(n, img_path, sort = "auto", plot_output = TRUE, save_output = FALSE, swatch_radius = 50) {
+extract_pal <- function(n, img_path, sort = "auto", plot_output = TRUE, save_output = FALSE, print_output = TRUE, swatch_radius = 50) {
 
   err_bad_link <- simpleError("Incorrect path. Please supply the correct link to img_path")
   tryCatch(
@@ -206,11 +211,11 @@ extract_pal <- function(n, img_path, sort = "auto", plot_output = TRUE, save_out
   pal <- map_chr(1:n, ~rgb(km[.x,1], km[.x,2], km[.x,3], maxColorValue = 255))
 
   # sort
-  pal <- sort_pal_auto(pal, label)
+  pal <- sort_pal_auto(pal, label, print_output = print_output)
   if(sort == "manual") {
     print(show_pal(pal))
     nx <- as.numeric(readline("How many colours to pick? "))
-    pal <- sort_pal(pal, n = nx)
+    pal <- sort_pal(pal, n = nx, print_output = print_output)
   }
 
   # make plot output

@@ -161,6 +161,7 @@ swatch <- function(pal, img = NULL, family = "Poppins", padding = 0, radius = 50
 #'
 #' @param pal Palette. Character vector of hex codes
 #' @param n Number of colours to choose
+#' @param print_output logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.
 #'
 #' @return Character vector
 #' @export
@@ -169,7 +170,7 @@ swatch <- function(pal, img = NULL, family = "Poppins", padding = 0, radius = 50
 #' pal <- sample(c('#57364e', '#566f1b', '#97a258', '#cac58b', '#dbedd5'))
 #' sort_pal(pal)
 #' }
-sort_pal <- function(pal, n = NULL) {
+sort_pal <- function(pal, n = NULL, print_output = TRUE) {
   print(show_pal(pal))
   if(is.null(n)) n <- length(pal)
   message(white(glue("Click {n} colours in the desired order\n\n")))
@@ -182,7 +183,10 @@ sort_pal <- function(pal, n = NULL) {
   new_pal_order <- floor(id*length(pal)) + 1
   pal <- pal[new_pal_order]
   print(show_pal(pal))
-  pastey(pal)
+
+  if (print_output) {
+    pastey(pal)
+  }
 
   pal
 
@@ -196,6 +200,7 @@ sort_pal <- function(pal, n = NULL) {
 #' @param .pal Input palette
 #' @param label Label for the palette.
 #' @param plot_output Logical. Default \code{FALSE}.
+#' @param print_output logical. Default \code{TRUE}. Prints the output of the extracted palette as a message in the console.
 #'
 #' @return Returns a character vector of hex codes
 #' @export
@@ -203,7 +208,7 @@ sort_pal <- function(pal, n = NULL) {
 #' @examples
 #' pal <- sample(colours(), 8)
 #' sort_pal_auto(pal, 'test')
-sort_pal_auto <- function(.pal, label, plot_output = FALSE) {
+sort_pal_auto <- function(.pal, label, plot_output = FALSE, print_output = TRUE) {
   rgb <- col2rgb(.pal)
   tsp <- as.TSP(dist(t(rgb)))
   sol <- solve_TSP(tsp, control = list(repetitions = 1e3))
@@ -212,7 +217,9 @@ sort_pal_auto <- function(.pal, label, plot_output = FALSE) {
   max_k <- which.min(x)[1]
   if(max_k != 1) .pal <- .pal[c(max_k:length(.pal), 1:(max_k-1))]
   if(plot_output) print(show_pal(.pal))
-  pastey(.pal, label)
+  if (print_output) {
+    pastey(.pal, label)
+  }
   .pal
 }
 
